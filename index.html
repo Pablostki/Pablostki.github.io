@@ -77,27 +77,48 @@
     justify-content: flex-end;
     padding: 0 6% 80px;
     border-bottom: 1px solid var(--light);
+    position: relative;
+    background-image: url('header-bg.jpg');
+    background-size: cover;
+    background-position: center 40%;
+    background-repeat: no-repeat;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(248, 248, 246, 0.6);
+    z-index: 0;
+  }
+
+  .hero > * {
+    position: relative;
+    z-index: 1;
   }
 
   .hero-tag {
     font-size: 12px;
     letter-spacing: 0.2em;
     text-transform: uppercase;
-    color: var(--grey);
+    color: var(--black);
+    font-weight: 600;
+    text-shadow: 0 1px 8px rgba(255,255,255,0.8);
     margin-bottom: 24px;
   }
 
   .hero-name {
     font-size: clamp(56px, 9vw, 130px);
-    font-weight: 300;
+    font-weight: 700;
     line-height: 0.95;
     letter-spacing: -0.03em;
     margin-bottom: 40px;
+    text-shadow: 0 2px 24px rgba(0,0,0,0.18);
   }
 
   .hero-name em {
     font-style: italic;
-    font-weight: 300;
+    font-weight: 700;
   }
 
   .hero-meta {
@@ -110,16 +131,20 @@
 
   .hero-desc {
     font-size: 15px;
-    color: var(--grey);
+    color: var(--black);
+    font-weight: 500;
     max-width: 360px;
     line-height: 1.7;
+    text-shadow: 0 1px 8px rgba(255,255,255,0.8);
   }
 
   .hero-scroll {
     font-size: 12px;
     letter-spacing: 0.15em;
     text-transform: uppercase;
-    color: var(--grey);
+    color: var(--black);
+    font-weight: 600;
+    text-shadow: 0 1px 8px rgba(255,255,255,0.8);
     display: flex;
     align-items: center;
     gap: 12px;
@@ -130,7 +155,7 @@
     display: block;
     width: 48px;
     height: 1px;
-    background: var(--grey);
+    background: var(--black);
   }
 
   /* ── SECTION HEADER ── */
@@ -520,10 +545,10 @@
   <!-- PROJECT 01 – BeeNet -->
   <div class="project-item">
     <div>
-      <div class="img-box ratio-landscape" data-label="Imagen principal — BeeNet"></div>
+      <div class="img-box ratio-landscape has-image"><img src="beenet-main.jpg" alt="BeeNet — colmena con sensores IoT"></div>
       <div class="img-grid-2" style="margin-top:12px;">
-        <div class="img-box ratio-square" data-label="Detalle 1"></div>
-        <div class="img-box ratio-square" data-label="Detalle 2"></div>
+        <div class="img-box ratio-square has-image"><img src="img/beenet-detalle1.jpg" alt="BeeNet detalle 1"></div>
+        <div class="img-box ratio-square has-image"><img src="img/beenet-detalle2.jpg" alt="BeeNet detalle 2"></div>
       </div>
     </div>
     <div class="project-info">
@@ -541,17 +566,17 @@
           <span class="tag">Dashboard</span>
         </div>
       </div>
-      <a href="#" class="project-link">Ver proyecto →</a>
+      <a href="beenet.html" class="project-link">Ver proyecto →</a>
     </div>
   </div>
 
   <!-- PROJECT 02 – ESP32 Systems -->
   <div class="project-item reverse">
     <div>
-      <div class="img-box ratio-landscape" data-label="Imagen principal — ESP32"></div>
+      <div class="img-box ratio-landscape has-image"><img src="img/esp32-main.jpg" alt="ESP32 Systems"></div>
       <div class="img-grid-2" style="margin-top:12px;">
-        <div class="img-box ratio-square" data-label="PCB"></div>
-        <div class="img-box ratio-square" data-label="Prototipo"></div>
+        <div class="img-box ratio-square has-image"><img src="img/esp32-pcb.jpg" alt="PCB ESP32"></div>
+        <div class="img-box ratio-square has-image"><img src="img/esp32-prototipo.jpg" alt="Prototipo ESP32"></div>
       </div>
     </div>
     <div class="project-info">
@@ -569,7 +594,7 @@
           <span class="tag">PCB Design</span>
         </div>
       </div>
-      <a href="#" class="project-link">Ver proyecto →</a>
+      <a href="esp32.html" class="project-link">Ver proyecto →</a>
     </div>
   </div>
 
@@ -589,13 +614,13 @@
           <span class="tag">YOLO</span>
           <span class="tag">Edge AI</span>
         </div>
-        <a href="#" class="project-link">Ver proyecto →</a>
+        <a href="ai-vision.html" class="project-link">Ver proyecto →</a>
       </div>
     </div>
-    <div class="img-box ratio-wide" data-label="Imagen destacada — Computer Vision" style="margin-top:40px;"></div>
+    <div class="img-box ratio-wide has-image" style="margin-top:40px;"><img src="img/ai-main.jpg" alt="AI Computer Vision"></div>
     <div class="img-grid-2" style="margin-top:12px;">
-      <div class="img-box ratio-landscape" data-label="Resultado inferencia"></div>
-      <div class="img-box ratio-landscape" data-label="Pipeline de datos"></div>
+      <div class="img-box ratio-landscape has-image"><img src="img/ai-inferencia.jpg" alt="Resultado inferencia"></div>
+      <div class="img-box ratio-landscape has-image"><img src="img/ai-pipeline.jpg" alt="Pipeline de datos"></div>
     </div>
     <p class="project-desc" style="margin-top:28px;">
       Sistemas de visión artificial para detección y clasificación en tiempo real
@@ -607,9 +632,9 @@
   <div class="project-item">
     <div>
       <div class="img-grid-3">
-        <div class="img-box ratio-portrait" data-label="Render 3D"></div>
-        <div class="img-box ratio-square" data-label="Prototipo CNC"></div>
-        <div class="img-box ratio-square" data-label="Pieza final"></div>
+        <div class="img-box ratio-portrait has-image"><img src="img/fab-render.jpg" alt="Render 3D"></div>
+        <div class="img-box ratio-square has-image"><img src="img/fab-cnc.jpg" alt="Prototipo CNC"></div>
+        <div class="img-box ratio-square has-image"><img src="img/fab-pieza.jpg" alt="Pieza final"></div>
       </div>
     </div>
     <div class="project-info">
@@ -627,14 +652,14 @@
           <span class="tag">Láser</span>
         </div>
       </div>
-      <a href="#" class="project-link">Ver proyecto →</a>
+      <a href="fabricacion.html" class="project-link">Ver proyecto →</a>
     </div>
   </div>
 
   <!-- PROJECT 05 – Diseño de Producto -->
   <div class="project-item reverse">
     <div>
-      <div class="img-box ratio-portrait" data-label="Vista producto"></div>
+      <div class="img-box ratio-portrait has-image"><img src="img/producto-main.jpg" alt="Diseño de Producto"></div>
     </div>
     <div class="project-info">
       <div>
@@ -651,17 +676,17 @@
           <span class="tag">Ergonomía</span>
         </div>
       </div>
-      <a href="#" class="project-link">Ver proyecto →</a>
+      <a href="producto.html" class="project-link">Ver proyecto →</a>
     </div>
   </div>
 
   <!-- PROJECT 06 – Itera Studio -->
   <div class="project-item">
     <div>
-      <div class="img-box ratio-wide" data-label="Imagen de estudio — Itera"></div>
+      <div class="img-box ratio-wide has-image"><img src="img/itera-main.jpg" alt="Itera Studio"></div>
       <div class="img-grid-2" style="margin-top:12px;">
-        <div class="img-box ratio-landscape" data-label="Proceso"></div>
-        <div class="img-box ratio-landscape" data-label="Equipo"></div>
+        <div class="img-box ratio-landscape has-image"><img src="img/itera-proceso.jpg" alt="Proceso Itera"></div>
+        <div class="img-box ratio-landscape has-image"><img src="img/itera-equipo.jpg" alt="Equipo Itera"></div>
       </div>
     </div>
     <div class="project-info">
@@ -678,7 +703,7 @@
           <span class="tag">R&amp;D</span>
         </div>
       </div>
-      <a href="#" class="project-link">Ver proyectos →</a>
+      <a href="itera.html" class="project-link">Ver proyectos →</a>
     </div>
   </div>
 

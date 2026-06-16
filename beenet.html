@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BeeNet — Pablo Gutierrez</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --black: #0a0a0a; --white: #f8f8f6; --grey: #888;
+    --light: #e8e8e4; --accent: #c8b49a;
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Inter', sans-serif; background: var(--white); color: var(--black); font-size: 16px; line-height: 1.5; }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 28px 6%; background: rgba(248,248,246,0.92);
+    backdrop-filter: blur(12px); border-bottom: 1px solid var(--light);
+  }
+  .nav-logo { font-size: 14px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; color: var(--black); }
+  .nav-back { font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; color: var(--grey); display: flex; align-items: center; gap: 8px; transition: color 0.2s; }
+  .nav-back:hover { color: var(--black); }
+
+  /* HERO DEL PROYECTO */
+  .project-hero {
+    min-height: 70vh; display: flex; flex-direction: column;
+    justify-content: flex-end; padding: 120px 6% 80px;
+    border-bottom: 1px solid var(--light);
+  }
+  .project-meta { display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 20px; margin-bottom: 32px; }
+  .project-number { font-size: 12px; letter-spacing: 0.15em; color: var(--accent); }
+  .project-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+  .tag { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; padding: 5px 12px; border: 1px solid var(--light); color: var(--grey); border-radius: 2px; }
+  .project-title { font-size: clamp(48px, 8vw, 110px); font-weight: 700; line-height: 0.95; letter-spacing: -0.03em; margin-bottom: 32px; }
+  .project-title em { font-style: italic; }
+  .project-intro { font-size: 18px; color: var(--grey); max-width: 640px; line-height: 1.75; }
+
+  /* COVER IMAGE */
+  .cover-img {
+    width: 100%; aspect-ratio: 16/7; overflow: hidden;
+    border-bottom: 1px solid var(--light);
+  }
+  .cover-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  /* Placeholder cuando no hay imagen */
+  .cover-img:not(:has(img)), .cover-img.empty {
+    background: var(--light); display: flex; align-items: center; justify-content: center;
+    font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--grey);
+  }
+
+  /* CONTENT */
+  .content { max-width: 800px; margin: 0 auto; padding: 80px 6%; }
+  .content h2 { font-size: 28px; font-weight: 600; letter-spacing: -0.02em; margin-bottom: 20px; margin-top: 60px; }
+  .content h2:first-child { margin-top: 0; }
+  .content p { font-size: 16px; color: #444; line-height: 1.8; margin-bottom: 20px; }
+  .content ul { padding-left: 20px; margin-bottom: 20px; }
+  .content ul li { font-size: 16px; color: #444; line-height: 1.8; margin-bottom: 8px; }
+
+  /* IMAGE GRID */
+  .img-section { padding: 0 6% 80px; }
+  .img-section-label { font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--grey); margin-bottom: 24px; padding-top: 60px; border-top: 1px solid var(--light); }
+  .img-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+  .img-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+  .img-full { margin-bottom: 16px; }
+
+  .img-box { position: relative; background: var(--light); border: 1px solid #d8d8d4; overflow: hidden; }
+  .img-box.ratio-landscape { aspect-ratio: 4/3; }
+  .img-box.ratio-portrait  { aspect-ratio: 3/4; }
+  .img-box.ratio-wide      { aspect-ratio: 16/7; }
+  .img-box.ratio-square    { aspect-ratio: 1/1; }
+  .img-box img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+  .img-box[data-label]::after {
+    content: attr(data-label); position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--grey);
+  }
+  .img-box.has-image::after { display: none; }
+
+  /* VIDEO */
+  .video-section { padding: 0 6% 80px; }
+  .video-section-label { font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--grey); margin-bottom: 24px; padding-top: 60px; border-top: 1px solid var(--light); }
+  .video-wrapper { position: relative; aspect-ratio: 16/9; background: var(--black); overflow: hidden; }
+  .video-wrapper iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: none; }
+  /* Placeholder video */
+  .video-placeholder { aspect-ratio: 16/9; background: var(--light); border: 1px solid #d8d8d4; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; }
+  .video-placeholder span { font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--grey); }
+  .play-icon { width: 48px; height: 48px; border: 1px solid var(--grey); border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+  .play-icon::after { content: '▶'; font-size: 14px; color: var(--grey); margin-left: 3px; }
+
+  /* NAV PROYECTOS */
+  .project-nav { display: flex; justify-content: space-between; padding: 60px 6%; border-top: 1px solid var(--light); }
+  .project-nav a { font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; color: var(--grey); display: flex; align-items: center; gap: 10px; transition: color 0.2s; }
+  .project-nav a:hover { color: var(--black); }
+
+  /* FOOTER */
+  footer { padding: 40px 6%; border-top: 1px solid var(--light); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+  .footer-copy { font-size: 12px; color: var(--grey); }
+
+  @media (max-width: 768px) {
+    .img-grid-2, .img-grid-3 { grid-template-columns: 1fr; }
+    .project-title { font-size: clamp(40px, 10vw, 72px); }
+    .content { padding: 60px 5%; }
+    .img-section, .video-section { padding-left: 5%; padding-right: 5%; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">Pablo Gutierrez</a>
+  <a href="index.html#proyectos" class="nav-back">← Volver</a>
+</nav>
+
+<!-- HERO -->
+<section class="project-hero">
+  <div class="project-meta">
+    <span class="project-number">01 / 06</span>
+    <div class="project-tags">
+      <span class="tag">IoT</span>
+      <span class="tag">LoRa</span>
+      <span class="tag">Hardware</span>
+      <span class="tag">Dashboard</span>
+    </div>
+  </div>
+  <h1 class="project-title">Bee<em>Net</em></h1>
+  <p class="project-intro">
+    Red de sensores IoT para monitoreo de colmenas en tiempo real.
+    Hardware embebido, comunicación LoRa y dashboard de visualización de datos apícolas.
+  </p>
+</section>
+
+<!-- IMAGEN PORTADA -->
+<!-- Reemplaza img/beenet-cover.jpg con tu imagen principal grande -->
+<div class="cover-img">
+  <img src="beenet-main.jpg" alt="BeeNet portada">
+</div>
+
+<!-- DESCRIPCIÓN -->
+<div class="content">
+  <h2>El problema</h2>
+  <p>
+    <!-- Edita este texto con la descripción real del proyecto -->
+    Los apicultores deben inspeccionar físicamente cada colmena para conocer su estado,
+    lo que implica tiempo, estrés para las abejas y pérdida de información en tiempo real.
+  </p>
+
+  <h2>La solución</h2>
+  <p>
+    BeeNet es un sistema de sensores modulares con forma hexagonal (inspirados en el panal)
+    que se instalan en la colmena y transmiten datos de temperatura, humedad, peso y sonido
+    a través de una red LoRa hacia un dashboard web.
+  </p>
+
+  <h2>Características técnicas</h2>
+  <ul>
+    <li>Microcontrolador ESP32 con comunicación LoRa 915 MHz</li>
+    <li>Sensores: temperatura, humedad, vibración y peso</li>
+    <li>Autonomía de batería: más de 6 meses en modo bajo consumo</li>
+    <li>Carcasa impresa en 3D con sellado IP65</li>
+    <li>Dashboard en tiempo real con alertas configurables</li>
+  </ul>
+
+  <h2>Resultado</h2>
+  <p>
+    <!-- Agrega los resultados reales aquí -->
+    Sistema instalado y probado en colmenas reales durante la temporada 2024,
+    reduciendo las inspecciones físicas en un 70%.
+  </p>
+</div>
+
+<!-- GALERÍA DE IMÁGENES -->
+<div class="img-section">
+  <div class="img-section-label">Galería</div>
+
+  <!-- Imagen ancha -->
+  <div class="img-full">
+    <div class="img-box ratio-wide" data-label="img/beenet-galeria1.jpg — imagen ancha del sistema completo"></div>
+    <!-- Con imagen: <div class="img-box ratio-wide has-image"><img src="img/beenet-galeria1.jpg" alt="..."></div> -->
+  </div>
+
+  <!-- Dos imágenes -->
+  <div class="img-grid-2">
+    <div class="img-box ratio-landscape" data-label="img/beenet-galeria2.jpg — detalle sensor"></div>
+    <div class="img-box ratio-landscape" data-label="img/beenet-galeria3.jpg — instalación colmena"></div>
+  </div>
+
+  <!-- Tres imágenes -->
+  <div class="img-grid-3">
+    <div class="img-box ratio-square" data-label="img/beenet-galeria4.jpg — PCB"></div>
+    <div class="img-box ratio-square" data-label="img/beenet-galeria5.jpg — prototipo"></div>
+    <div class="img-box ratio-square" data-label="img/beenet-galeria6.jpg — dashboard"></div>
+  </div>
+</div>
+
+<!-- VIDEO -->
+<div class="video-section">
+  <div class="video-section-label">Video del proyecto</div>
+
+  <!-- OPCIÓN A: video de YouTube — reemplaza VIDEO_ID con el ID real -->
+  <!-- <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/VIDEO_ID" allowfullscreen></iframe></div> -->
+
+  <!-- OPCIÓN B: video local — reemplaza con tu archivo -->
+  <!-- <video controls style="width:100%;"><source src="img/beenet-video.mp4" type="video/mp4"></video> -->
+
+  <!-- Placeholder mientras no hay video -->
+  <div class="video-placeholder">
+    <div class="play-icon"></div>
+    <span>Video próximamente — reemplaza este bloque con tu iframe o &lt;video&gt;</span>
+  </div>
+</div>
+
+<!-- NAVEGACIÓN ENTRE PROYECTOS -->
+<div class="project-nav">
+  <a href="itera.html">← Proyecto anterior</a>
+  <a href="esp32.html">Siguiente proyecto →</a>
+</div>
+
+<footer>
+  <span class="footer-copy">© 2025 Pablo Gutierrez</span>
+  <a href="index.html" style="font-size:12px;color:var(--grey);text-decoration:none;">← Volver al portafolio</a>
+</footer>
+
+</body>
+</html>
