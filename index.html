@@ -3,109 +3,779 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pablo Gutierrez</title>
+<title>Pablo Gutierrez — Portafolio</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet">
 
 <style>
-body {
-  font-family: 'Inter', sans-serif;
-  margin: 0;
-  background: white;
-  color: black;
-}
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-section {
-  padding: 100px 12%;
-}
-
-h1 {
-  font-size: 64px;
-  font-weight: 600;
-  margin-bottom: 10px;
-}
-
-p {
-  font-size: 18px;
-  color: #555;
-}
-
-h2 {
-  font-size: 28px;
-  margin-bottom: 60px;
-}
-
-.project {
-  margin-bottom: 100px;
-  cursor: pointer;
-}
-
-.project img {
-  width: 100%;
-  transition: 0.4s ease;
-}
-
-.project:hover img {
-  opacity: 0.85;
-}
-
-.project-title {
-  font-size: 20px;
-  margin-top: 10px;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-  h1 {
-    font-size: 40px;
+  :root {
+    --black: #0a0a0a;
+    --white: #f8f8f6;
+    --grey: #888;
+    --light: #e8e8e4;
+    --accent: #c8b49a;
   }
 
-  section {
-    padding: 60px 8%;
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--white);
+    color: var(--black);
+    font-size: 16px;
+    line-height: 1.5;
   }
-}
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 28px 6%;
+    background: rgba(248,248,246,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--light);
+  }
+
+  .nav-logo {
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--black);
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 36px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--grey);
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--black); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 0 6% 80px;
+    border-bottom: 1px solid var(--light);
+  }
+
+  .hero-tag {
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--grey);
+    margin-bottom: 24px;
+  }
+
+  .hero-name {
+    font-size: clamp(56px, 9vw, 130px);
+    font-weight: 300;
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    margin-bottom: 40px;
+  }
+
+  .hero-name em {
+    font-style: italic;
+    font-weight: 300;
+  }
+
+  .hero-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+
+  .hero-desc {
+    font-size: 15px;
+    color: var(--grey);
+    max-width: 360px;
+    line-height: 1.7;
+  }
+
+  .hero-scroll {
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--grey);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .hero-scroll::before {
+    content: '';
+    display: block;
+    width: 48px;
+    height: 1px;
+    background: var(--grey);
+  }
+
+  /* ── SECTION HEADER ── */
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 60px 6% 48px;
+    border-bottom: 1px solid var(--light);
+  }
+
+  .section-label {
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--grey);
+  }
+
+  .section-count {
+    font-size: 12px;
+    color: var(--light);
+    letter-spacing: 0.1em;
+  }
+
+  /* ── PROJECTS ── */
+  .projects { padding: 0 6%; }
+
+  .project-item {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    padding: 80px 0;
+    border-bottom: 1px solid var(--light);
+    align-items: start;
+    cursor: pointer;
+    transition: opacity 0.25s;
+  }
+
+  .project-item:hover { opacity: 0.85; }
+
+  .project-item.reverse { direction: rtl; }
+  .project-item.reverse > * { direction: ltr; }
+
+  .project-item.full {
+    grid-template-columns: 1fr;
+  }
+
+  /* Image placeholder */
+  .img-box {
+    position: relative;
+    background: var(--light);
+    overflow: hidden;
+    border: 1px solid #d8d8d4;
+  }
+
+  .img-box::after {
+    content: attr(data-label);
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--grey);
+  }
+
+  .img-box.ratio-landscape { aspect-ratio: 4/3; }
+  .img-box.ratio-portrait  { aspect-ratio: 3/4; }
+  .img-box.ratio-wide      { aspect-ratio: 16/7; }
+  .img-box.ratio-square    { aspect-ratio: 1/1; }
+
+  /* Real image (for when you add them later) */
+  .img-box img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .img-box.has-image::after { display: none; }
+
+  /* Image grid for multi-image projects */
+  .img-grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .img-grid-3 {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .img-grid-3 .img-box:first-child { grid-row: 1 / 3; }
+
+  .project-info { display: flex; flex-direction: column; justify-content: space-between; min-height: 200px; }
+
+  .project-number {
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    color: var(--accent);
+    margin-bottom: 20px;
+  }
+
+  .project-title {
+    font-size: clamp(28px, 3.5vw, 48px);
+    font-weight: 300;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 24px;
+  }
+
+  .project-desc {
+    font-size: 14px;
+    color: var(--grey);
+    line-height: 1.75;
+    margin-bottom: 32px;
+    max-width: 340px;
+  }
+
+  .project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 32px;
+  }
+
+  .tag {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 5px 12px;
+    border: 1px solid var(--light);
+    color: var(--grey);
+    border-radius: 2px;
+  }
+
+  .project-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--black);
+    border-bottom: 1px solid var(--black);
+    padding-bottom: 2px;
+    width: fit-content;
+    transition: gap 0.2s;
+  }
+
+  .project-link:hover { gap: 18px; }
+
+  /* Full-width featured project */
+  .project-featured {
+    padding: 80px 6%;
+    border-bottom: 1px solid var(--light);
+    cursor: pointer;
+  }
+
+  .project-featured-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .project-featured .project-title { font-size: clamp(36px, 5vw, 72px); }
+
+  /* ── ABOUT ── */
+  .about {
+    padding: 120px 6%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    border-bottom: 1px solid var(--light);
+    align-items: start;
+  }
+
+  .about-left {}
+
+  .about-label {
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--grey);
+    margin-bottom: 32px;
+  }
+
+  .about-text {
+    font-size: clamp(22px, 2.8vw, 36px);
+    font-weight: 300;
+    line-height: 1.4;
+    letter-spacing: -0.015em;
+  }
+
+  .about-right { padding-top: 60px; }
+
+  .about-detail {
+    margin-bottom: 40px;
+  }
+
+  .about-detail-label {
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 10px;
+  }
+
+  .about-detail-value {
+    font-size: 15px;
+    color: var(--grey);
+    line-height: 1.7;
+  }
+
+  /* Skills bar */
+  .skills { margin-top: 16px; }
+
+  .skill {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 14px;
+  }
+
+  .skill-name {
+    font-size: 13px;
+    color: var(--black);
+    min-width: 140px;
+  }
+
+  .skill-bar-track {
+    flex: 1;
+    height: 1px;
+    background: var(--light);
+    position: relative;
+  }
+
+  .skill-bar-fill {
+    position: absolute;
+    top: 0; left: 0; bottom: 0;
+    background: var(--black);
+    height: 1px;
+  }
+
+  /* ── CONTACT ── */
+  .contact {
+    padding: 120px 6%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+
+  .contact-title {
+    font-size: clamp(40px, 6vw, 88px);
+    font-weight: 300;
+    letter-spacing: -0.03em;
+    line-height: 0.95;
+  }
+
+  .contact-title em { font-style: italic; }
+
+  .contact-right { padding-top: 20px; }
+
+  .contact-links { list-style: none; margin-top: 32px; }
+
+  .contact-links li {
+    border-top: 1px solid var(--light);
+    padding: 20px 0;
+  }
+
+  .contact-links a {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-decoration: none;
+    color: var(--black);
+    font-size: 15px;
+    transition: color 0.2s;
+  }
+
+  .contact-links a:hover { color: var(--grey); }
+
+  .contact-links .link-label { font-weight: 400; }
+
+  .contact-links .link-arrow {
+    font-size: 18px;
+    transition: transform 0.2s;
+  }
+
+  .contact-links a:hover .link-arrow { transform: translateX(6px); }
+
+  /* ── FOOTER ── */
+  footer {
+    padding: 40px 6%;
+    border-top: 1px solid var(--light);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .footer-copy {
+    font-size: 12px;
+    color: var(--grey);
+    letter-spacing: 0.06em;
+  }
+
+  .footer-right {
+    font-size: 12px;
+    color: var(--light);
+    letter-spacing: 0.06em;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .project-item,
+    .project-item.reverse,
+    .about,
+    .contact {
+      grid-template-columns: 1fr;
+      direction: ltr;
+    }
+
+    .project-item { gap: 32px; }
+    .about { gap: 48px; }
+    .contact { gap: 48px; }
+    .about-right { padding-top: 0; }
+    .contact-right { padding-top: 0; }
+    .hero { padding-bottom: 60px; }
+  }
+
+  @media (max-width: 600px) {
+    nav { padding: 20px 5%; }
+    .nav-links { gap: 20px; }
+    .img-grid-2, .img-grid-3 { grid-template-columns: 1fr; }
+    .img-grid-3 .img-box:first-child { grid-row: auto; }
+  }
 </style>
 </head>
-
 <body>
 
-<section>
-  <h1>Pablo Gutierrez</h1>
-  <p>Ingeniero Electrónico / Diseñador Integral / OskiLab</p>
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">Pablo Gutierrez</a>
+  <ul class="nav-links">
+    <li><a href="#proyectos">Proyectos</a></li>
+    <li><a href="#sobre-mi">Sobre mí</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-tag">Portafolio 2025 — Ingeniería &amp; Diseño</div>
+  <h1 class="hero-name">Pablo<br><em>Gutierrez</em></h1>
+  <div class="hero-meta">
+    <p class="hero-desc">
+      Ingeniero Electrónico · Magíster en Diseño Avanzado<br>
+      Electrónica, IA y fabricación digital en Itera Studio.
+    </p>
+    <span class="hero-scroll">Scroll para ver proyectos</span>
+  </div>
 </section>
 
-<section>
-  <h2>Proyectos</h2>
+<!-- PROJECTS HEADER -->
+<div class="section-header" id="proyectos">
+  <span class="section-label">Proyectos seleccionados</span>
+  <span class="section-count">06</span>
+</div>
 
-  <div class="project">
-    <img src="beenet.jpg" alt="BeeNet">
-    <div class="project-title">BeeNet</div>
+<!-- PROJECTS -->
+<div class="projects">
+
+  <!-- PROJECT 01 – BeeNet -->
+  <div class="project-item">
+    <div>
+      <div class="img-box ratio-landscape" data-label="Imagen principal — BeeNet"></div>
+      <div class="img-grid-2" style="margin-top:12px;">
+        <div class="img-box ratio-square" data-label="Detalle 1"></div>
+        <div class="img-box ratio-square" data-label="Detalle 2"></div>
+      </div>
+    </div>
+    <div class="project-info">
+      <div>
+        <div class="project-number">01 / 06</div>
+        <h2 class="project-title">BeeNet</h2>
+        <p class="project-desc">
+          Red de sensores IoT para monitoreo de colmenas en tiempo real.
+          Hardware embebido, comunicación LoRa y dashboard de visualización.
+        </p>
+        <div class="project-tags">
+          <span class="tag">IoT</span>
+          <span class="tag">LoRa</span>
+          <span class="tag">Hardware</span>
+          <span class="tag">Dashboard</span>
+        </div>
+      </div>
+      <a href="#" class="project-link">Ver proyecto →</a>
+    </div>
   </div>
 
-  <div class="project">
-    <img src="esp32.jpg" alt="ESP32">
-    <div class="project-title">ESP32 Systems</div>
+  <!-- PROJECT 02 – ESP32 Systems -->
+  <div class="project-item reverse">
+    <div>
+      <div class="img-box ratio-landscape" data-label="Imagen principal — ESP32"></div>
+      <div class="img-grid-2" style="margin-top:12px;">
+        <div class="img-box ratio-square" data-label="PCB"></div>
+        <div class="img-box ratio-square" data-label="Prototipo"></div>
+      </div>
+    </div>
+    <div class="project-info">
+      <div>
+        <div class="project-number">02 / 06</div>
+        <h2 class="project-title">ESP32<br>Systems</h2>
+        <p class="project-desc">
+          Diseño de sistemas embebidos sobre ESP32: firmware personalizado,
+          OTA updates y comunicación BLE / Wi-Fi para aplicaciones industriales.
+        </p>
+        <div class="project-tags">
+          <span class="tag">ESP32</span>
+          <span class="tag">Firmware</span>
+          <span class="tag">BLE</span>
+          <span class="tag">PCB Design</span>
+        </div>
+      </div>
+      <a href="#" class="project-link">Ver proyecto →</a>
+    </div>
   </div>
 
-  <div class="project">
-    <img src="ia.jpg" alt="IA">
-    <div class="project-title">AI + Computer Vision</div>
+  <!-- PROJECT 03 – AI + Computer Vision (FEATURED) -->
+  <div style="padding: 80px 0; border-bottom: 1px solid var(--light);">
+    <div class="project-featured-header" style="padding: 0;">
+      <div>
+        <div class="project-number">03 / 06</div>
+        <h2 class="project-title" style="font-size: clamp(36px,5vw,72px); font-weight:300; letter-spacing:-0.03em; line-height:1.05;">
+          AI + Computer<br><em>Vision</em>
+        </h2>
+      </div>
+      <div style="text-align:right;">
+        <div class="project-tags" style="justify-content:flex-end;">
+          <span class="tag">Python</span>
+          <span class="tag">OpenCV</span>
+          <span class="tag">YOLO</span>
+          <span class="tag">Edge AI</span>
+        </div>
+        <a href="#" class="project-link">Ver proyecto →</a>
+      </div>
+    </div>
+    <div class="img-box ratio-wide" data-label="Imagen destacada — Computer Vision" style="margin-top:40px;"></div>
+    <div class="img-grid-2" style="margin-top:12px;">
+      <div class="img-box ratio-landscape" data-label="Resultado inferencia"></div>
+      <div class="img-box ratio-landscape" data-label="Pipeline de datos"></div>
+    </div>
+    <p class="project-desc" style="margin-top:28px;">
+      Sistemas de visión artificial para detección y clasificación en tiempo real
+      ejecutados en hardware de bajo consumo (Raspberry Pi, Jetson Nano).
+    </p>
   </div>
 
+  <!-- PROJECT 04 – Fabricación Digital -->
+  <div class="project-item">
+    <div>
+      <div class="img-grid-3">
+        <div class="img-box ratio-portrait" data-label="Render 3D"></div>
+        <div class="img-box ratio-square" data-label="Prototipo CNC"></div>
+        <div class="img-box ratio-square" data-label="Pieza final"></div>
+      </div>
+    </div>
+    <div class="project-info">
+      <div>
+        <div class="project-number">04 / 06</div>
+        <h2 class="project-title">Fabricación<br>Digital</h2>
+        <p class="project-desc">
+          Diseño y manufactura de piezas mediante impresión 3D FDM/SLA,
+          CNC y corte láser. Desde CAD hasta pieza funcional.
+        </p>
+        <div class="project-tags">
+          <span class="tag">CAD</span>
+          <span class="tag">3D Print</span>
+          <span class="tag">CNC</span>
+          <span class="tag">Láser</span>
+        </div>
+      </div>
+      <a href="#" class="project-link">Ver proyecto →</a>
+    </div>
+  </div>
+
+  <!-- PROJECT 05 – Diseño de Producto -->
+  <div class="project-item reverse">
+    <div>
+      <div class="img-box ratio-portrait" data-label="Vista producto"></div>
+    </div>
+    <div class="project-info">
+      <div>
+        <div class="project-number">05 / 06</div>
+        <h2 class="project-title">Diseño de<br>Producto</h2>
+        <p class="project-desc">
+          Metodología de diseño centrado en el usuario aplicada
+          al desarrollo de productos físico-digitales desde concepto hasta MVP.
+        </p>
+        <div class="project-tags">
+          <span class="tag">UX</span>
+          <span class="tag">Prototipado</span>
+          <span class="tag">Sketching</span>
+          <span class="tag">Ergonomía</span>
+        </div>
+      </div>
+      <a href="#" class="project-link">Ver proyecto →</a>
+    </div>
+  </div>
+
+  <!-- PROJECT 06 – Itera Studio -->
+  <div class="project-item">
+    <div>
+      <div class="img-box ratio-wide" data-label="Imagen de estudio — Itera"></div>
+      <div class="img-grid-2" style="margin-top:12px;">
+        <div class="img-box ratio-landscape" data-label="Proceso"></div>
+        <div class="img-box ratio-landscape" data-label="Equipo"></div>
+      </div>
+    </div>
+    <div class="project-info">
+      <div>
+        <div class="project-number">06 / 06</div>
+        <h2 class="project-title">Itera<br>Studio</h2>
+        <p class="project-desc">
+          Proyectos de consultoría y desarrollo tecnológico realizados
+          bajo Itera Studio: electrónica, software y diseño para clientes regionales.
+        </p>
+        <div class="project-tags">
+          <span class="tag">Consultoría</span>
+          <span class="tag">Startup</span>
+          <span class="tag">R&amp;D</span>
+        </div>
+      </div>
+      <a href="#" class="project-link">Ver proyectos →</a>
+    </div>
+  </div>
+
+</div><!-- /projects -->
+
+<!-- ABOUT -->
+<section class="about" id="sobre-mi">
+  <div class="about-left">
+    <div class="about-label">Sobre mí</div>
+    <p class="about-text">
+      Combino ingeniería electrónica con diseño avanzado para crear productos
+      que resuelven problemas reales, desde el circuito hasta la experiencia de uso.
+    </p>
+  </div>
+  <div class="about-right">
+
+    <div class="about-detail">
+      <div class="about-detail-label">Formación</div>
+      <div class="about-detail-value">
+        Magíster en Diseño Avanzado<br>
+        Ingeniería Electrónica
+      </div>
+    </div>
+
+    <div class="about-detail">
+      <div class="about-detail-label">Empresa</div>
+      <div class="about-detail-value">Itera Studio — Fundador</div>
+    </div>
+
+    <div class="about-detail">
+      <div class="about-detail-label">Habilidades</div>
+      <div class="skills">
+        <div class="skill">
+          <span class="skill-name">Electrónica &amp; Firmware</span>
+          <div class="skill-bar-track"><div class="skill-bar-fill" style="width:90%"></div></div>
+        </div>
+        <div class="skill">
+          <span class="skill-name">Inteligencia Artificial</span>
+          <div class="skill-bar-track"><div class="skill-bar-fill" style="width:80%"></div></div>
+        </div>
+        <div class="skill">
+          <span class="skill-name">Diseño Industrial</span>
+          <div class="skill-bar-track"><div class="skill-bar-fill" style="width:75%"></div></div>
+        </div>
+        <div class="skill">
+          <span class="skill-name">Fabricación Digital</span>
+          <div class="skill-bar-track"><div class="skill-bar-fill" style="width:85%"></div></div>
+        </div>
+        <div class="skill">
+          <span class="skill-name">Diseño de Producto</span>
+          <div class="skill-bar-track"><div class="skill-bar-fill" style="width:78%"></div></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
 </section>
 
-<section>
-  <h2>Sobre mí</h2>
-  <p>
-    Desarrollo soluciones en electrónica, inteligencia artificial y fabricación digital,
-    combinando diseño y tecnología para crear sistemas innovadores.
-  </p>
+<!-- CONTACT -->
+<section class="contact" id="contacto">
+  <div class="contact-left">
+    <div class="about-label">Contacto</div>
+    <h2 class="contact-title">Hablemos<br>de tu <em>proyecto</em></h2>
+  </div>
+  <div class="contact-right">
+    <p style="font-size:15px; color:var(--grey); line-height:1.7;">
+      Disponible para proyectos de consultoría, desarrollo de hardware,
+      inteligencia artificial aplicada y diseño de producto.
+    </p>
+    <ul class="contact-links">
+      <li>
+        <a href="mailto:pablo.guti.j@gmail.com">
+          <span class="link-label">pablo.guti.j@gmail.com</span>
+          <span class="link-arrow">→</span>
+        </a>
+      </li>
+      <li>
+        <a href="https://github.com/Pablostki" target="_blank" rel="noopener">
+          <span class="link-label">GitHub — Pablostki</span>
+          <span class="link-arrow">→</span>
+        </a>
+      </li>
+      <li>
+        <a href="https://linkedin.com" target="_blank" rel="noopener">
+          <span class="link-label">LinkedIn</span>
+          <span class="link-arrow">→</span>
+        </a>
+      </li>
+    </ul>
+  </div>
 </section>
 
-<section>
-  <h2>Contacto</h2>
-  <p>tuemail@email.com</p>
-</section>
+<!-- FOOTER -->
+<footer>
+  <span class="footer-copy">© 2025 Pablo Gutierrez. Todos los derechos reservados.</span>
+  <span class="footer-right">Diseño &amp; Ingeniería</span>
+</footer>
 
 </body>
 </html>
